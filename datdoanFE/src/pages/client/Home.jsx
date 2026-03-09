@@ -3,9 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
   ShoppingCart,
-  User,
-  LogOut,
-  Navigation,
 } from "lucide-react";
 
 import productApi from "../../api/productApi.js";
@@ -14,22 +11,13 @@ import { addToCart } from "../../redux/cartSlice.js";
 const Home = () => {
   const [products, setProducts] = useState([]);
   const [loadingProducts, setLoadingProducts] = useState(true);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const featuredProducts = products.slice(0, 6);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const cartItems = useSelector((state) => state.cart.items);
-  const cartCount = cartItems.reduce(
-    (total, item) => total + item.quantity,
-    0
-  );
 
   // ================= LOAD DATA =================
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    setIsLoggedIn(!!token);
-
     const loadProducts = async () => {
       try {
         setLoadingProducts(true);
@@ -54,13 +42,7 @@ const Home = () => {
     loadProducts();
   }, []);
 
-  // ================= LOGOUT =================
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    setIsLoggedIn(false);
-    navigate("/login");
-  };
+  // (Auth/profile is handled by the global Header component)
 
   // ================= ADD TO CART =================
   const handleAddToCart = (product) => {
@@ -70,34 +52,6 @@ const Home = () => {
 
   return (
     <div className="w-full bg-white min-h-screen font-sans">
-
-      {/* ================= HEADER ================= */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm px-8 py-4">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
-
-          <Link to="/" className="text-3xl font-black text-primary">
-            SmartFood
-          </Link>
-
-          <nav className="hidden md:flex gap-8 font-semibold text-gray-600">
-            <a href="#about" className="hover:text-primary">Giới thiệu</a>
-            <a href="#menu" className="hover:text-primary">Thực đơn</a>
-            <a href="#contact" className="hover:text-primary">Liên hệ</a>
-          </nav>
-
-          <div className="flex items-center gap-6">
-            <Link to="/cart" className="relative">
-              <ShoppingCart size={26} />
-              {cartCount > 0 && (
-                <span className="absolute -top-2 -right-2 bg-primary text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
-                  {cartCount}
-                </span>
-              )}
-            </Link>
-          </div>
-
-        </div>
-      </header>
 
 
       {/* ================= HERO ================= */}

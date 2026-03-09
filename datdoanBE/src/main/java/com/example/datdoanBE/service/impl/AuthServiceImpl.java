@@ -5,9 +5,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -36,7 +34,6 @@ public class AuthServiceImpl implements AuthService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtils jwtUtils;
-    private final AuthenticationManager authenticationManager;
 
     @Override
     @Transactional
@@ -66,26 +63,38 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public JwtResponse login(LoginRequest request) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+    // Manual authentication to give clearer errors when passwords don't match or user not found
+    User user = userRepository.findByUsername(request.getUsername()).orElseThrow(() -> new RuntimeException("Tài khoản không tồn tại"));
+    if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+        // If password in DB is not yet encoded (legacy data), allow plain-text match and upgrade to encoded
+        if (user.getPassword() != null && user.getPassword().equals(request.getPassword())) {
+            user.setPassword(passwordEncoder.encode(request.getPassword()));
+            userRepository.save(user);
+        } else {
+            throw new RuntimeException("Tên đăng nhập hoặc mật khẩu không đúng");
+        }
+    }
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtils.generateJwtToken(authentication);
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+    // Build UserDetails and Authentication manually
+    UserDetailsImpl userDetails = UserDetailsImpl.build(user);
+    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+    SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        List<String> roles = userDetails.getAuthorities().stream()
-                .map(item -> item.getAuthority())
-                .collect(Collectors.toList());
+    String jwt = jwtUtils.generateJwtToken(authentication);
 
-        return JwtResponse.builder()
-                .token(jwt)
-                .id(userDetails.getId())
-                .username(userDetails.getUsername())
-                .fullName(userDetails.getFullName())
-                .email(userDetails.getEmail())
-                .phone(userDetails.getPhone())
-                .roles(roles)
-                .build();
+    List<String> roles = userDetails.getAuthorities().stream()
+        .map(item -> item.getAuthority())
+        .collect(Collectors.toList());
+
+    return JwtResponse.builder()
+        .token(jwt)
+        .id(userDetails.getId())
+        .username(userDetails.getUsername())
+        .fullName(userDetails.getFullName())
+        .email(userDetails.getEmail())
+        .phone(userDetails.getPhone())
+        .roles(roles)
+        .build();
     }
     @Override
     public JwtResponse refresh(String refreshToken) {

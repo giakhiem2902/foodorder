@@ -12,9 +12,3 @@ public class OrderRequest {
     private String paymentMethod;
     private List<CartItemDTO> items;
 }
-
-@Data
-class CartItemDTO {
-    private Long productId;
-    private Integer quantity;
-}

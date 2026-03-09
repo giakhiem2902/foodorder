@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { clearCart } from "../../redux/cartSlice";
+import orderApi from "../../api/orderApi";
+import { useNavigate } from "react-router-dom";
 
 const Checkout = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.items);
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -39,16 +42,27 @@ const Checkout = () => {
       return;
     }
 
-    const orderData = {
-      customer: formData,
-      items: cartItems,
-      total: totalAmount,
+    const orderRequest = {
+      customerName: formData.fullName,
+      phone: formData.phone,
+      shippingAddress: formData.address + (formData.note ? " - Ghi chú: " + formData.note : ""),
+      paymentMethod: "COD",
+      items: cartItems.map((it) => ({ productId: it.id, quantity: it.quantity })),
     };
 
-    console.log("Order gửi đi:", orderData);
-
-    alert("Đặt hàng thành công!");
-    dispatch(clearCart());
+    // Gọi API checkout
+    orderApi.checkout(orderRequest)
+      .then((res) => {
+        console.log("Order server trả về:", res.data);
+        alert("Đặt hàng thành công!");
+  dispatch(clearCart());
+  navigate('/');
+      })
+      .catch((err) => {
+        console.error('Lỗi khi đặt hàng:', err);
+        const msg = err?.response?.data?.message || 'Có lỗi khi gửi đơn hàng';
+        alert(msg);
+      });
   };
 
   return (
