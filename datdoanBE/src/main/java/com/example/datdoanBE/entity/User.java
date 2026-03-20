@@ -3,6 +3,8 @@ package com.example.datdoanBE.entity;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -34,5 +36,6 @@ public class User {
     @JoinTable(name = "user_roles", 
                joinColumns = @JoinColumn(name = "user_id"), 
                inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @JsonIgnore  // ← Tránh serialize roles trong entity này
     private Set<Role> roles = new HashSet<>();
 }

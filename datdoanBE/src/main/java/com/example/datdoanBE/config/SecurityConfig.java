@@ -47,7 +47,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration cfg = new CorsConfiguration();
         cfg.setAllowedOrigins(Arrays.asList("http://localhost:3000")); 
-        cfg.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        cfg.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         cfg.setAllowCredentials(true);
         // Mở rộng AllowedHeaders để tránh bị chặn bởi các Header trình duyệt tự thêm
         cfg.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-Requested-With", "Accept", "Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"));
@@ -71,7 +71,8 @@ public class SecurityConfig {
                 .requestMatchers("/api/client/**").permitAll() 
                 .requestMatchers("/uploads/**").permitAll()
                 .requestMatchers("/ws/**").permitAll()
-                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                // Admin endpoints chỉ cần authenticated, không cần role ADMIN
+                .requestMatchers("/api/admin/**").authenticated()
                 .anyRequest().authenticated()
             );
 

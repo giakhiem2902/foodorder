@@ -1,0 +1,281 @@
+/* Admin Dashboard Animations & Transitions */
+
+/* Fade In Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Slide In from Left */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Slide In from Top */
+@keyframes slideInTop {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Slide In from Right */
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Scale In */
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Pulse Animation */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Bounce Animation */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Admin Container Animations */
+.admin-container {
+  animation: fadeIn 0.3s ease-in;
+}
+
+.admin-sidebar {
+  animation: slideInLeft 0.4s ease-out;
+}
+
+.admin-header {
+  animation: slideInTop 0.3s ease-out;
+}
+
+.admin-content {
+  animation: fadeIn 0.5s ease-in;
+}
+
+/* Card Animations */
+.admin-card {
+  animation: slideInTop 0.4s ease-out;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.admin-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+/* Grid Item Animations */
+.admin-grid-item {
+  animation: scaleIn 0.3s ease-out backwards;
+}
+
+.admin-grid-item:nth-child(1) { animation-delay: 0.05s; }
+.admin-grid-item:nth-child(2) { animation-delay: 0.1s; }
+.admin-grid-item:nth-child(3) { animation-delay: 0.15s; }
+.admin-grid-item:nth-child(4) { animation-delay: 0.2s; }
+.admin-grid-item:nth-child(5) { animation-delay: 0.25s; }
+.admin-grid-item:nth-child(6) { animation-delay: 0.3s; }
+
+/* Table Row Animations */
+.admin-table-row {
+  animation: slideInLeft 0.3s ease-out backwards;
+}
+
+.admin-table-row:nth-child(1) { animation-delay: 0.05s; }
+.admin-table-row:nth-child(2) { animation-delay: 0.1s; }
+.admin-table-row:nth-child(3) { animation-delay: 0.15s; }
+.admin-table-row:nth-child(4) { animation-delay: 0.2s; }
+.admin-table-row:nth-child(5) { animation-delay: 0.25s; }
+
+/* Button Animations */
+.admin-btn {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.admin-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.admin-btn:active {
+  transform: translateY(0);
+}
+
+/* Loading Animation */
+.admin-loading {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Icon Animation */
+.admin-icon-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Modal Animations */
+.admin-modal-overlay {
+  animation: fadeIn 0.2s ease-out;
+}
+
+.admin-modal-content {
+  animation: scaleIn 0.3s cubic-bezier(0.36, 0, 0.66, 1);
+}
+
+/* Badge Animations */
+.admin-badge {
+  animation: slideInRight 0.3s ease-out;
+}
+
+/* Smooth Transitions for Interactive Elements */
+.admin-interactive {
+  transition: all 0.2s ease-out;
+}
+
+.admin-interactive:hover {
+  color: inherit;
+}
+
+/* Status Badge Animations */
+.status-badge {
+  animation: slideInRight 0.4s ease-out backwards;
+}
+
+.status-badge.delivered { animation-delay: 0.1s; }
+.status-badge.processing { animation-delay: 0.15s; }
+.status-badge.pending { animation-delay: 0.2s; }
+.status-badge.cancelled { animation-delay: 0.25s; }
+
+/* Smooth Color Transitions */
+.admin-color-transition {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Shadow Transitions */
+.admin-shadow-transition {
+  transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Transform Transitions */
+.admin-transform-transition {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Stagger Animation for Lists */
+.stagger-item {
+  animation: slideInLeft 0.4s ease-out backwards;
+}
+
+.stagger-item:nth-child(n) {
+  animation-delay: calc(0.05s * var(--index, 0));
+}
+
+/* Responsive Animation Adjustments */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Focus Animations */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1), 0 0 0 3px rgba(59, 130, 246, 0.5);
+  transition: box-shadow 0.2s ease-out;
+}
+
+/* Hover Effect for Links */
+a {
+  transition: color 0.2s ease-out;
+}
+
+a:hover {
+  color: inherit;
+}
+
+/* Glow Effect */
+.admin-glow {
+  box-shadow: 0 0 20px rgba(251, 146, 60, 0.3);
+}
+
+.admin-glow:hover {
+  box-shadow: 0 0 30px rgba(251, 146, 60, 0.5);
+}
+
+/* Text Animation */
+.admin-text-animate {
+  animation: slideInTop 0.5s ease-out;
+}
+
+/* Fade Out Animation */
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.admin-fade-out {
+  animation: fadeOut 0.3s ease-out;
+}

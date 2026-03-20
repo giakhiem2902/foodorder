@@ -1,6 +1,7 @@
 package com.example.datdoanBE.controller.client;
 
 import org.springframework.http.ResponseEntity;
+import java.util.List;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -27,14 +28,15 @@ public class UserClientController {
         UserDetailsImpl principal = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Long userId = principal.getId();
         User user = userRepository.findById(userId).orElseThrow();
-        UserResponse resp = UserResponse.builder()
-                .id(user.getId())
-                .username(user.getUsername())
-                .fullName(user.getFullName())
-                .email(user.getEmail())
-                .phone(user.getPhone())
-                .address(user.getAddress())
-                .build();
+    UserResponse resp = UserResponse.builder()
+        .id(user.getId())
+        .username(user.getUsername())
+        .fullName(user.getFullName())
+        .email(user.getEmail())
+        .phone(user.getPhone())
+        .address(user.getAddress())
+        .roles(user.getRoles() != null ? user.getRoles().stream().map(r -> r.getName().name()).toList() : List.of())
+        .build();
         return ResponseEntity.ok(resp);
     }
 

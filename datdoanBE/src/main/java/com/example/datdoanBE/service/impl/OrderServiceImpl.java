@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.datdoanBE.dto.request.OrderRequest;
 import com.example.datdoanBE.dto.response.MessageResponse;
+import com.example.datdoanBE.dto.response.OrderAdminDTO;
 import com.example.datdoanBE.entity.Order;
 import com.example.datdoanBE.entity.OrderItem;
 import com.example.datdoanBE.entity.Product;
@@ -141,6 +142,40 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Order> getAllOrders() {
         return orderRepository.findAll();
+    }
+
+    @Override
+    public List<OrderAdminDTO> getAllOrdersDTO() {
+        List<Order> orders = orderRepository.findAll();
+        return orders.stream()
+                .map(this::convertToDTO)
+                .collect(java.util.stream.Collectors.toList());
+    }
+
+    private OrderAdminDTO convertToDTO(Order order) {
+        return OrderAdminDTO.builder()
+                .id(order.getId())
+                .customerName(order.getCustomerName())
+                .phone(order.getPhone())
+                .shippingAddress(order.getShippingAddress())
+                .totalPrice(order.getTotalPrice())
+                .status(order.getStatus())
+                .paymentMethod(order.getPaymentMethod())
+                .createdAt(order.getCreatedAt())
+                .userId(order.getUser() != null ? order.getUser().getId() : null)
+                .username(order.getUser() != null ? order.getUser().getUsername() : null)
+                .userFullName(order.getUser() != null ? order.getUser().getFullName() : null)
+                .itemsCount(order.getItems() != null ? order.getItems().size() : 0)
+                .items(order.getItems() != null ? order.getItems().stream()
+                        .map(item -> OrderAdminDTO.OrderItemDTO.builder()
+                                .id(item.getId())
+                                .quantity(item.getQuantity())
+                                .priceAtPurchase(item.getPriceAtPurchase())
+                                .productId(item.getProduct() != null ? item.getProduct().getId() : null)
+                                .productName(item.getProduct() != null ? item.getProduct().getName() : null)
+                                .build())
+                        .collect(java.util.stream.Collectors.toList()) : java.util.Collections.emptyList())
+                .build();
     }
 
     @Override

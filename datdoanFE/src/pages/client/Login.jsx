@@ -7,7 +7,7 @@ const Login = () => {
   const [credentials, setCredentials] = useState({ username: '', password: '' });
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false); // Thêm trạng thái loading
-  const { login } = useAuth();
+  const { login, isAdmin } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -19,7 +19,14 @@ const Login = () => {
       // credentials gửi đi khớp với LoginRequest {username, password}
       const result = await login(credentials);
       if (result.success) {
-        navigate('/'); 
+        // Prefer to check the returned user (guaranteed) instead of relying on context update timing
+        const loggedUser = result.user;
+        const roles = loggedUser?.roles || [];
+        if (roles.includes('ROLE_ADMIN')) {
+          navigate('/admin');
+        } else {
+          navigate('/');
+        }
       } else {
         setError(result.message || 'Tên đăng nhập hoặc mật khẩu không đúng');
       }
