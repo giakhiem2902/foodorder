@@ -16,9 +16,9 @@ const Header = () => {
     <nav className="bg-white shadow-md sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
-          {/* Logo dự án Smart City */}
+          {/* Logo dự án Smart Food */}
           <Link to="/" className="flex items-center">
-            <span className="text-2xl font-bold text-primary">VungTau<span className="text-gray-800">Food</span></span>
+            <span className="text-2xl font-bold text-primary">Smart<span className="text-gray-800">Food</span></span>
           </Link>
 
           <div className="flex items-center space-x-6">

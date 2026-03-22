@@ -61,7 +61,7 @@ const CategoryProducts = () => {
               <div className="flex-grow">
                 <h3 className="font-bold text-lg text-gray-800 line-clamp-1">{product.name}</h3>
                 <p className="text-sm text-gray-500 mt-1 line-clamp-2 min-h-[40px]">
-                  {product.description || "Món ăn đặc sắc tại Vũng Tàu"}
+                  {product.description || "Món ăn đặc sắc của chúng tôi."}
                 </p>
                 <p className="text-primary font-bold text-xl mt-2">
                   {product.price.toLocaleString('vi-VN')}đ

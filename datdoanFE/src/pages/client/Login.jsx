@@ -45,7 +45,7 @@ const Login = () => {
           <img 
             src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80" 
             className="w-full h-full object-cover opacity-30 scale-110" 
-            alt="Vung Tau Food" 
+            alt=" Smart Food" 
           />
           <div className="absolute inset-0 bg-gradient-to-br from-orange-600/80 to-primary/40"></div>
         </div>
@@ -53,7 +53,7 @@ const Login = () => {
         <div className="relative z-10 text-white max-w-lg">
           <h1 className="text-6xl font-black mb-6 leading-tight">Chào mừng bạn trở lại!</h1>
           <p className="text-xl opacity-90 font-light leading-relaxed">
-            Đăng nhập để tiếp tục khám phá những món ngon đặc sản Vũng Tàu và nhận ưu đãi độc quyền hôm nay.
+            Đăng nhập để tiếp tục khám phá những món ngon đặc sản và nhận ưu đãi độc quyền hôm nay.
           </p>
         </div>
       </div>
@@ -63,7 +63,7 @@ const Login = () => {
         <div className="max-w-md w-full">
           <div className="mb-10 text-center lg:text-left">
             <h2 className="text-4xl font-black text-gray-900 mb-3">Đăng Nhập</h2>
-            <p className="text-gray-500 font-medium">Vui lòng nhập thông tin tài khoản Vũng Tàu Food</p>
+            <p className="text-gray-500 font-medium">Vui lòng nhập thông tin tài khoản Smart Food</p>
           </div>
 
           {error && (

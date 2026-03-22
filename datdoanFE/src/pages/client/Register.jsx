@@ -45,15 +45,15 @@ const Register = () => {
           <img 
             src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80" 
             className="w-full h-full object-cover opacity-20 scale-110" 
-            alt="Vung Tau Food" 
+            alt="Smart Food" 
           />
           <div className="absolute inset-0 bg-gradient-to-br from-orange-600/90 to-primary/60"></div>
         </div>
         
         <div className="relative z-10 text-white max-w-md text-center">
-          <h1 className="text-5xl font-black mb-6">Gia Nhập SmartFood</h1>
+          <h1 className="text-5xl font-black mb-6">Gia Nhập Smart Food</h1>
           <p className="text-xl opacity-90 font-light leading-relaxed">
-            Tạo tài khoản để trải nghiệm dịch vụ đặt món nhanh nhất tại Vũng Tàu. Ưu đãi 50% cho đơn hàng đầu tiên!
+            Tạo tài khoản để trải nghiệm dịch vụ đặt món nhanh nhất tại Smart Food. Ưu đãi 50% cho đơn hàng đầu tiên!
           </p>
         </div>
       </div>
@@ -136,7 +136,7 @@ const Register = () => {
             <div className="relative">
               <MapPin className="absolute left-4 top-4 text-gray-400" size={18} />
               <textarea
-                placeholder="Địa chỉ giao hàng tại Vũng Tàu"
+                placeholder="Địa chỉ giao hàng (ví dụ: 123 Đường ABC, Phường XYZ, Quận 1, TP.HCM)"
                 className={`${inputClass} h-28 pl-11 pt-3.5`}
                 onChange={(e) => setFormData({...formData, address: e.target.value})}
               ></textarea>

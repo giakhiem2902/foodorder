@@ -94,7 +94,7 @@ const Cart = () => {
                 <span>{totalAmount.toLocaleString()}đ</span>
               </div>
               <div className="flex justify-between text-gray-600">
-                <span>Phí vận chuyển (Vũng Tàu)</span>
+                <span>Phí vận chuyển</span>
                 <span className="text-green-600 font-medium">Miễn phí</span>
               </div>
               <div className="border-t pt-4 flex justify-between items-center">
